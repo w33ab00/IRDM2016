@@ -9,18 +9,16 @@ Team:
 Dataset: 
 + Global Energy Forecasting Competition 2014 ([details](http://www.drhongtao.com/gefcom))  
 + Download [link](http://1drv.ms/1PIVd0L).
-    - Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive
-    - Put it in the `/data` folder
 
 
 Software dependencies:
 + Python 2.7.x and libraries (numpy, pandas, scikit-learn, matplotlib, keras, theano)  
   - Version compatibility: Keras 1.0.0 with Theano 0.8.0.dev0 as backend
 
-Usage:
+Usage:  
 1. Get the dataset  
    a. Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive  
-   b. Put it in the `/data` folder
+   b. Put it in the `/data` folder  
 2. Go to `/code` folder. Run the python scripts in the following order:  
    <pre>
    getFeatures.py
@@ -28,5 +26,5 @@ Usage:
    mlpEnsemble.py
    makePredictions.py
    dataVisualisation.py
-   </pre>
+   </pre>  
 
