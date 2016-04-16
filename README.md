@@ -18,16 +18,16 @@ Software dependencies:
 
 
 Usage:  
-1. Get the dataset  
-   * Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive  
-   * Put it in the `/data` folder
+1. Get the dataset
+  1.Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive
+  2.Put it in the `/data` folder
 
-2. Go to `/code` folder. Run the python scripts in the following order:  
-    <pre>
-    getFeatures.py
-    mlpPretraining.py
-    mlpEnsemble.py
-    makePredictions.py
-    dataVisualisation.py
-    </pre>  
+2. Go to `/code` folder. Run the python scripts in the following order:
+  <pre>
+  getFeatures.py
+  mlpPretraining.py
+  mlpEnsemble.py
+  makePredictions.py
+  dataVisualisation.py
+  </pre>
 
