@@ -177,7 +177,7 @@ def select_weather_station(X_Data, Y_Data, keepNoStations=1):
             Xcross = copy.deepcopy(X_Data)
             Xcross[:, s] = 0
             mlp = MLP(modelStructure=[500, 100, 20], dropOuts=[0.8, 0.5, 0.5], nFeatures=nFeat, X_Data=Xcross, Y_Data=Y_Data)
-            #mlp.pretrain()
+            mlp.pretrain()
             mlp.train()
             #stationErrs[s] = Mlp.model.evaluate(mlp.X_val, mlp.y_val)
             mdl = getattr(mlp, 'model')
