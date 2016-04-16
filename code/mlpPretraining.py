@@ -160,6 +160,7 @@ class MLP(object):
 def select_weather_station(X_Data, Y_Data, keepNoStations=1):
     # what happens to validation error if we leave out weather station k?
     # the weather station data is in columns 6:30
+    stationsRemoved = []
     nFeat = np.shape(X_Data)[1]
     noStations = 25
     first_weather_index = 6
@@ -189,26 +190,37 @@ def select_weather_station(X_Data, Y_Data, keepNoStations=1):
         # get station with largest validation error
         delStation = max(stationErrs, key=stationErrs.get)
         # set column of respective station to 0
-        X_Data[:, delStation] = 0
+        #X_Data[:, delStation] = 0
+        stationsRemoved.append(delStation)
         # delete that station from the available stations list
         wStationCols.remove(delStation)
         # free up stationErrs
         stationErrs = None
         if np.shape(wStationCols)[0] <= keepNoStations: break
-    return X_Data
+    return stationsRemoved
 
 
 
 if __name__ == "__main__":
 
-    X_Data = np.load("animesh/X_Data.npy")
-    Y_Data = np.load("animesh/Y_Data.npy")
+    X_Data = np.load("../data/X_Data.npy")
+    Y_Data = np.load("../data/Y_Data.npy")
     X_Data = X_Data[~(X_Data == 0).all(1)]
     Y_Data = Y_Data[~(Y_Data == 0).all(1)]
     nFeat = np.shape(X_Data)[1]
     Mlp = MLP(modelStructure=[500, 100, 20], dropOuts=[0.8, 0.5, 0.5], nFeatures=nFeat, X_Data=X_Data, Y_Data=Y_Data)
     Mlp.pretrain(batch_size=200, nEpoch=300)
     Mlp.train(nEpoch=300)
-    #reducedX = select_weather_station(X_Data, Y_Data, keepNoStations=3)
-    #np.save('animesh/reducedX.npy', reducedX)
-    #pickle.dump(Mlp.finetune_weights, open("finetuneWeights_toyexample.p", "wb"))
+    
+    # from the training, learn which stations are irrelevant
+    stationsRemoved = select_weather_station(X_Data, Y_Data, keepNoStations=3)
+    
+    # remove these from the saved feature matrices
+    for slidebackto in [24, 48, 72, 98]:
+        fname = "../data/X_Data_mod_" + str(slidebackto) + ".npy"
+        X_Data = np.load(fname)
+        X_Data = np.delete(X_Data, stationsRemoved, 1)
+        np.save(fname, X_Data)
+        print "adjusted stations in " + fname
+
+    print "All done."
