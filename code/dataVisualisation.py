@@ -20,6 +20,17 @@ import copy
 #############################################################################
 # METHODS
 
+
+def average_load_over_hours(dataframe):
+
+    load_avg_hours = dataframe.groupby(['year', 'month', 'day'])['LOAD'].mean().reset_index()
+    load_avg_hours['dt'] = 0
+    for i in range(len(load_avg_hours.index)):
+        load_avg_hours.loc[i, 'dt'] = dt.datetime(year=int(load_avg_hours.loc[i, 'year']),
+                                                  month=int(load_avg_hours.loc[i, 'month']),
+                                                  day=int(load_avg_hours.loc[i, 'day']))
+    return load_avg_hours
+
 def save_seasonality_plot(load_avg_hours, year):
     f = plt.figure(1)
     dat = matdat.date2num(load_avg_hours['dt'])
@@ -28,7 +39,7 @@ def save_seasonality_plot(load_avg_hours, year):
     plt.ylabel("energy load")
     title = "Seasonality of the energy load in %d" % year
     f.suptitle(title)
-    fname = 'seasonality%d.png' % year
+    fname = '../output/seasonality%d.png' % year
     f.savefig(fname)
     f.clear()
 
@@ -48,7 +59,7 @@ def save_weather_load_plot(dataframe, year, station):
     f1.suptitle(title)
     plt.xlabel("temperature")
     plt.ylabel("energy load")
-    fname = 'loadvstemp%d.png' % year
+    fname = '../output/loadvstemp%d.png' % year
     f1.savefig(fname)
     plt.close()
 
@@ -56,7 +67,7 @@ def save_weather_load_plot(dataframe, year, station):
 
 
 try:
-    df_train = pickle.load(open("df_train.p", "rb"))
+    df_train = pickle.load(open("../data/df_train.p", "rb"))
     print "df_train loaded."
 
     df_2005 = df_train[df_train['year'] == 2005]
@@ -67,7 +78,7 @@ try:
     df_2010 = df_train[df_train['year'] == 2010]
 
     forecasting_period = df_2010[(df_2010['month'] >=8) & (df_2010['day'] == 30)]
-    forecasting_period.to_csv(path_or_buf="forecastingPeriod.csv")
+    forecasting_period.to_csv(path_or_buf="../data/forecastingPeriod.csv")
     #pdb.set_trace()
     yr_dict = {
         2005: df_2005,
@@ -80,7 +91,8 @@ try:
 
     # -----------------------------------------  1. Load vs temp (only for 2005)
     for yr in range(2005,2011):
-        df = yr_dict[yr].groupby(['year', 'day'])['LOAD'].mean().reset_index()
+        #df = yr_dict[yr].groupby(['year', 'day'])['LOAD'].mean().reset_index()
+        df = average_load_over_hours(yr_dict[yr])
         save_seasonality_plot(df, yr)
     # -----------------------------------------  2. Yearly pattern (only for 2005)
     # show how load varies over the year
@@ -103,7 +115,7 @@ try:
     plt.legend(handles=handles, loc=3)
     plt.xlabel("day in month")
     plt.ylabel("energy load")
-    f.savefig("avg_over_days_new.png")
+    f.savefig("../output/avg_over_days_new.png")
     f.clear()
     # -----------------------------------------  3. Daily pattern
     handles = []
@@ -115,7 +127,7 @@ try:
     plt.legend(handles=handles, loc=2)
     plt.xlabel("hour")
     plt.ylabel("energy load")
-    f.savefig("avg_over_hours_new.png")
+    f.savefig("../output/avg_over_hours_new.png")
     f.clear()
 
 
@@ -125,8 +137,7 @@ try:
 except IOError:
     print "df_train.p not found. creating..."
     # LOAD DATASET
-    df_train = pd.read_csv("/Users/mh/Documents/CSML/IRDM/GroupCW/GEFCom2014 Data/Load/Task 1/L1-train.csv",
-                           delimiter=",", encoding="utf-8", header=0)
+    df_train = pd.read_csv("../data/L1-train.csv", delimiter=",", encoding="utf-8", header=0)
     # MANIPULATE DATASET
     lastIdxLoadMissing = df_train[df_train.LOAD.isnull()].index[-1]
     df_train = df_train[lastIdxLoadMissing+1:] # dataframe from beginning on valid load entry till end
@@ -148,7 +159,7 @@ except IOError:
         df_train.loc[i, 'day'] = tt_tuple.tm_mday
         df_train.loc[i, 'hour'] = tt_tuple.tm_hour
     # save df_train
-    pickle.dump(df_train, open("df_train.p", "wb"))
+    pickle.dump(df_train, open("../data/df_train.p", "wb"))
 
 
 
