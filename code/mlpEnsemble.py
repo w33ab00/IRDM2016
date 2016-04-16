@@ -90,18 +90,17 @@ if __name__ == "__main__":
     sys.setrecursionlimit(1000000) # to enable pickling
     Y_Data = np.load("animesh/Y_Data.npy")
     Y_Data = Y_Data[~(Y_Data == 0).all(1)]
-    X_mod_24 = np.load("X_Data_mod_24.npy") # ZERO COLUMNS, ZERO ROWS ALREADY CLEANED
+    
+    X_mod_24 = np.load("X_Data_mod_24.npy")
+    X_mod_24 = X_mod_24[~(X_mod_48==0).all(1)]
 
     X_mod_48 = np.load("X_Data_mod_48.npy")
-    X_mod_48 = np.delete(X_mod_48, [6,7,8,9,10,11,12,13,14,15,16,18,19,20,22,23,24,25,27,28,29],1)
     X_mod_48 = X_mod_48[~(X_mod_48==0).all(1)]
 
     X_mod_72 = np.load("X_Data_mod_72.npy")
-    X_mod_72 = np.delete(X_mod_72, [6,7,8,9,10,11,12,13,14,15,16,18,19,20,22,23,24,25,27,28,29],1)
     X_mod_72 = X_mod_72[~(X_mod_72==0).all(1)]
 
     X_mod_96 = np.load("X_Data_mod_98.npy")
-    X_mod_96 = np.delete(X_mod_96, [6,7,8,9,10,11,12,13,14,15,16,18,19,20,22,23,24,25,27,28,29],1)
     X_mod_96 = X_mod_96[~(X_mod_96==0).all(1)]
 
     print np.shape(X_mod_24)[1]
