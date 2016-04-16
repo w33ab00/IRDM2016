@@ -36,8 +36,8 @@ def establish_ensemble(Y_Data, nEpoch, batch_size, *X_dataset):
         idx = idx_mlp[0]
         mlp = idx_mlp[1][0]
         hist = idx_mlp[1][1]
-        fname_weights = "fine_tune_weights_mlpEnsemble_" + idx.__str__()
-        fname_history = "history_mlpEnsemble_" + idx.__str__()
+        fname_weights = "../model/fine_tune_weights_mlpEnsemble_" + idx.__str__()
+        fname_history = "../model/history_mlpEnsemble_" + idx.__str__()
         pickle.dump(mlp.finetune_weights, open(fname_weights, "wb"))
         pickle.dump(hist, open(fname_history, "wb"))
     return ensemble
@@ -88,19 +88,19 @@ def train_ensemble(ensemble, X_val, Y_val, eta, alpha):
 
 if __name__ == "__main__":
     sys.setrecursionlimit(1000000) # to enable pickling
-    Y_Data = np.load("animesh/Y_Data.npy")
+    Y_Data = np.load("../data/Y_Data.npy")
     Y_Data = Y_Data[~(Y_Data == 0).all(1)]
     
-    X_mod_24 = np.load("X_Data_mod_24.npy")
-    X_mod_24 = X_mod_24[~(X_mod_48==0).all(1)]
+    X_mod_24 = np.load("../data/X_Data_mod_24.npy")
+    X_mod_24 = X_mod_24[~(X_mod_24==0).all(1)]
 
-    X_mod_48 = np.load("X_Data_mod_48.npy")
+    X_mod_48 = np.load("../data/X_Data_mod_48.npy")
     X_mod_48 = X_mod_48[~(X_mod_48==0).all(1)]
 
-    X_mod_72 = np.load("X_Data_mod_72.npy")
+    X_mod_72 = np.load("../data/X_Data_mod_72.npy")
     X_mod_72 = X_mod_72[~(X_mod_72==0).all(1)]
 
-    X_mod_96 = np.load("X_Data_mod_98.npy")
+    X_mod_96 = np.load("../data/X_Data_mod_98.npy")
     X_mod_96 = X_mod_96[~(X_mod_96==0).all(1)]
 
     print np.shape(X_mod_24)[1]
@@ -112,6 +112,6 @@ if __name__ == "__main__":
     Y_val = mlp.y_val
     X_val = mlp.X_val
     MLP_D = train_ensemble(Ensemble, X_val, Y_val, 0.3, 0.1)
-    pickle.dump(MLP_D, open("MLP_dictionary.p", "wb"))
+    pickle.dump(MLP_D, open("../model/MLP_dictionary.p", "wb"))
 
 
