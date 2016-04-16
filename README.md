@@ -24,12 +24,17 @@ Usage:
   2. Put it in the `/data` folder
 3. Go to `/code` folder. Run the python/R scripts in the following order:  
   <pre>
-  dataVisualisation.py
-  Baseline_model.R
-  getFeatures.py
-  mlpPretraining.py
-  mlpEnsemble.py
-  makePredictions.py
+  dataVisualisation.py -> for visualizing the data
+  Baseline_model.R     -> implements a baseline model (ARIMA) in R
+  getFeatures.py       -> extracts features for python script
+  mlpPretraining.py    -> pretraining the MLPs. Includes station selection.
+  mlpEnsemble.py       -> trains the ensemble of MLPs
+  makePredictions.py   -> predictions and plots
   </pre>
 
 
+Folder description:  
++ `code`: has python/R scripts
++ `data`: has original data as well as data generated during feature processing
++ `model`: has parameters from model (e.g. during pretraining or final modeling)
++ `output`: has output figures
