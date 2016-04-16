@@ -19,8 +19,8 @@ Software dependencies:
 
 Usage:  
 1. Get the dataset  
-  i. Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive  
-  ii. Put it in the `/data` folder  
+   * Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive  
+   * Put it in the `/data` folder
 
 2. Go to `/code` folder. Run the python scripts in the following order:  
     <pre>
