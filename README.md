@@ -17,11 +17,12 @@ Software dependencies:
   - Version compatibility: Keras 1.0.0 with Theano 0.8.0.dev0 as backend
 
 
-Usage:  
-1. Get the dataset  
-  1.Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive  
-  2.Put it in the `/data` folder  
-2. Go to `/code` folder. Run the python scripts in the following order:
+Usage:
+
+1. Get the dataset
+  1. Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive
+  2. Put it in the `/data` folder
+3. Go to `/code` folder. Run the python scripts in the following order:  
   <pre>
   getFeatures.py
   mlpPretraining.py
