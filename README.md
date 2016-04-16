@@ -22,12 +22,14 @@ Usage:
 1. Get the dataset
   1. Extract the `GEFCom2014 Data/Load/Task 1/L1-train.csv` file from archive
   2. Put it in the `/data` folder
-3. Go to `/code` folder. Run the python scripts in the following order:  
+3. Go to `/code` folder. Run the python/R scripts in the following order:  
   <pre>
+  dataVisualisation.py
+  Baseline_model.R
   getFeatures.py
   mlpPretraining.py
   mlpEnsemble.py
   makePredictions.py
-  dataVisualisation.py
   </pre>
+
 
